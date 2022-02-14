@@ -16,22 +16,15 @@
 
 #pragma once
 
-#include <string>
-
 namespace cpuid {
 
-auto largest_standard_function() -> unsigned;
+// core base frequency in MHz
+auto base_frequency() -> unsigned;
 
-// the pre-B0 step Intel P5 processors
-// don't return a vendor ID string.
-auto vendor() -> std::string;
+// core maximum frequency in MHz
+auto max_frequency() -> unsigned;
 
-auto processor_name() -> std::string;
+// bus (reference) frequency in MHz
+auto bus_frequency() -> unsigned;
 
 } // namespace cpuid
-
-// get processor feature flags
-#include "feature.hpp"
-
-// get processor frequency information
-#include "frequency.hpp"

@@ -41,6 +41,7 @@ add_compile_options (
 add_library ( cpuid++ SHARED
   src/cpuid.cpp
   src/feature.cpp
+  src/frequency.cpp
 )
 
 install ( TARGETS cpuid++ LIBRARY )

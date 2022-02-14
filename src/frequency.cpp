@@ -14,24 +14,27 @@
 /// You should have received a copy of the GNU General Public License along with
 /// this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#pragma once
+#include <cpuid.h>
 
-#include <string>
-
-namespace cpuid {
-
-auto largest_standard_function() -> unsigned;
-
-// the pre-B0 step Intel P5 processors
-// don't return a vendor ID string.
-auto vendor() -> std::string;
-
-auto processor_name() -> std::string;
-
-} // namespace cpuid
-
-// get processor feature flags
-#include "feature.hpp"
-
-// get processor frequency information
 #include "frequency.hpp"
+
+auto cpuid::base_frequency() -> unsigned {
+  unsigned freq, _;
+  if (__get_cpuid(0x16, &freq, &_, &_, &_))
+    return freq;
+  return {};
+}
+
+auto cpuid::max_frequency() -> unsigned {
+  unsigned freq, _;
+  if (__get_cpuid(0x16, &_, &freq, &_, &_))
+    return freq;
+  return {};
+}
+
+auto cpuid::bus_frequency() -> unsigned {
+  unsigned freq, _;
+  if (__get_cpuid(0x16, &_, &_, &freq, &_))
+    return freq;
+  return {};
+}
