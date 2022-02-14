@@ -112,6 +112,13 @@ $ build/target_name # If you replace the `target_name` previous,
                     # replacing it here together.
 ```
 
+This is a possible output with previous sample:
+
+``` output
+Intel(R) Core(TM) XX-XXXXXX CPU @ X.XXGHz
+This processor support PAE!
+```
+
 ### Bugs
 
 If you have any issues,
