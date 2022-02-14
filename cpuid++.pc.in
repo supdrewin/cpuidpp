@@ -1,0 +1,9 @@
+libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+
+Name: @CMAKE_PROJECT_NAME@
+Description: C++ wrappers for X86 cpu model detection.
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -lcpuid++
+Libs.private:
+Cflags: -I${includedir}
