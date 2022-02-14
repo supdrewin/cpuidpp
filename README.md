@@ -35,7 +35,48 @@ $ cmake --install build
 
 ### Usage
 
-Start your new project, like following:
+This is a sample code:
+
+``` cpp
+// We need to see output...
+#include <iostream>
+
+// All we do just include it.
+#include <cpuid++/cpuid.hpp>
+
+int main() {
+  // All methods leading with `cpuid` namespace.
+  // Then we call `processor_name()` to get a string
+  // contains your processor's name.
+  std::cout << cpuid::processor_name() << std::endl;
+
+  // We use `check_feature(cpuid::feature)` to check a feature.
+  // Then we check if the processor support PAE.
+  if (cpuid::check_feature(cpuid::feature::PAE))
+    std::cout << "This processor support PAE!" << std::endl;
+
+  return 0;
+}
+```
+
+Save it as `main.cpp`, then we compile and run it:
+
+``` shell
+$ c++ -o sample main.cpp $(pkg-config --libs cpuid++)
+$ ./sample
+```
+
+This is a possible output after run it:
+
+``` output
+Intel(R) Core(TM) XX-XXXXXX CPU @ X.XXGHz
+This processor support PAE!
+```
+
+Or using CMake, with previous `main.cpp`.
+
+Start your new project,
+we will create a structure like following:
 
 ``` text
 <Project Root>
@@ -72,30 +113,6 @@ target_link_libraries ( target_name PRIVATE PkgConfig::CPUID++ )
 
 We have added `main.cpp` to `CMakeLists.txt`.
 
-Now we can hacking with `main.cpp`, e.g.
-
-``` cpp
-// We need to see output...
-#include <iostream>
-
-// All we do just include it.
-#include <cpuid++/cpuid.hpp>
-
-int main() {
-  // All methods leading with `cpuid` namespace.
-  // Then we call `processor_name()` to get a string
-  // contains your processor's name.
-  std::cout << cpuid::processor_name() << std::endl;
-
-  // We use `check_feature(cpuid::feature)` to check a feature.
-  // Then we check if the processor support PAE.
-  if (cpuid::check_feature(cpuid::feature::PAE))
-    std::cout << "This processor support PAE!" << std::endl;
-
-  return 0;
-}
-```
-
 Everything is Ok now, then we build it.
 
 Do this from your project root:
@@ -110,13 +127,6 @@ Then we run the program:
 ``` shell
 $ build/target_name # If you replace the `target_name` previous,
                     # replacing it here together.
-```
-
-This is a possible output with previous sample:
-
-``` output
-Intel(R) Core(TM) XX-XXXXXX CPU @ X.XXGHz
-This processor support PAE!
 ```
 
 ### Bugs
