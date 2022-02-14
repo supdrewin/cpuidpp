@@ -3,13 +3,15 @@
 #include <string>
 
 int main() {
-  std::cout << "vendor_id       : " << cpuid::vendor() << std::endl;
-  std::cout << "model name      : " << cpuid::processor_name() << std::endl;
-  std::cout << "cpuid level     : " << cpuid::largest_standard_function()
-            << std::endl;
-  std::cout << "base MHz        : " << cpuid::base_frequency() << std::endl;
-  std::cout << "max MHz         : " << cpuid::max_frequency() << std::endl;
-  std::cout << "bus MHz         : " << cpuid::bus_frequency() << std::endl;
+  std::cout << "vendor id: " << cpuid::vendor() << std::endl;
+  std::cout << "model name: " << cpuid::processor_name() << std::endl;
+  std::cout << std::hex
+            << "max standard level: " << cpuid::largest_standard_function()
+            << "\nmax extended level: " << cpuid::largest_extended_function()
+            << std::dec << std::endl;
+  std::cout << "base MHz: " << cpuid::base_frequency() << std::endl;
+  std::cout << "max MHz: " << cpuid::max_frequency() << std::endl;
+  std::cout << "bus MHz: " << cpuid::bus_frequency() << std::endl;
   std::string flags;
   if (cpuid::check_feature(cpuid::feature::FPU))
     flags += "fpu ";
@@ -67,6 +69,10 @@ int main() {
     flags += "tm ";
   if (cpuid::check_feature(cpuid::feature::PBE))
     flags += "pbe";
-  std::cout << "flags           : " << flags << std::endl;
+  std::cout << "flags: " << flags << std::endl;
+  std::cout << "threads number per core: " << cpuid::threads_number_per_core()
+            << std::endl;
+  std::cout << "logical processors number: "
+            << cpuid::logical_processors_number() << std::endl;
   return 0;
 }

@@ -19,10 +19,11 @@
 #include "cpuid.hpp"
 
 auto cpuid::largest_standard_function() -> unsigned {
-  unsigned std, _;
-  if (__get_cpuid(0, &std, &_, &_, &_))
-    return std;
-  return {};
+  return static_cast<unsigned>(__get_cpuid_max(0, nullptr));
+}
+
+auto cpuid::largest_extended_function() -> unsigned {
+  return static_cast<unsigned>(__get_cpuid_max(0x80000000, nullptr));
 }
 
 auto cpuid::vendor() -> std::string {
@@ -44,5 +45,19 @@ auto cpuid::processor_name() -> std::string {
     if (__get_cpuid(0x80000003, name + 4, name + 5, name + 6, name + 7))
       if (__get_cpuid(0x80000004, name + 8, name + 9, name + 10, name + 11))
         return {reinterpret_cast<const char *>(name)};
+  return {};
+}
+
+auto cpuid::threads_number_per_core() -> unsigned {
+  unsigned ebx, _; // 00h = SMT level
+  if (__get_cpuid_count(0xb, 0, &_, &ebx, &_, &_))
+    return ebx;
+  return {};
+}
+
+auto cpuid::logical_processors_number() -> unsigned {
+  unsigned ebx, _; // 01h = core level
+  if (__get_cpuid_count(0xb, 1, &_, &ebx, &_, &_))
+    return ebx;
   return {};
 }

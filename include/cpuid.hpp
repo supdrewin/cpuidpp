@@ -20,13 +20,25 @@
 
 namespace cpuid {
 
+// The largest CPUID standard function input value supported
+// by the processor implementation.
 auto largest_standard_function() -> unsigned;
+
+// The largest CPUID extended function input value supported
+// by the processor implementation.
+auto largest_extended_function() -> unsigned;
 
 // the pre-B0 step Intel P5 processors
 // don't return a vendor ID string.
 auto vendor() -> std::string;
 
 auto processor_name() -> std::string;
+
+// get topology enumeration information
+
+auto threads_number_per_core() -> unsigned;
+
+auto logical_processors_number() -> unsigned;
 
 } // namespace cpuid
 
