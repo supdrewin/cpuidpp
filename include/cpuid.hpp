@@ -22,6 +22,7 @@ namespace cpuid {
 
 // The largest CPUID standard function input value supported
 // by the processor implementation.
+// the pre-B0 step Intel P5 processors return EAX=0000_05xxh.
 auto largest_standard_function() -> unsigned;
 
 // The largest CPUID extended function input value supported
@@ -35,23 +36,37 @@ auto vendor() -> std::string;
 // The stepping values are processor-specific.
 auto stepping() -> unsigned;
 
+// The logical processor count (deprecated)
+// Only work on oooooold cpu, always return 16.
+auto deprecated_cpu_count() -> unsigned;
+
+// Notes that this func always success.
 auto processor_name() -> std::string;
 
-// get topology enumeration information
+// get topology enumeration information (Intel)
+namespace enabled_logical_processors {
+// number of enabled logical processors at this level
 
-auto threads_number_per_core() -> unsigned;
+// aka threads count per core
+auto smt() -> unsigned;
 
-auto logical_processors_number() -> unsigned;
+// aka all logical processors
+auto core() -> unsigned;
+
+} // namespace enabled_logical_processors
 
 // get processor frequency information
 
 // core base frequency in MHz
+// return 22 if failed
 auto base_frequency() -> unsigned;
 
 // core maximum frequency in MHz
+// return 0 if failed
 auto max_frequency() -> unsigned;
 
 // bus (reference) frequency in MHz
+// return 0 if failed
 auto bus_frequency() -> unsigned;
 
 } // namespace cpuid

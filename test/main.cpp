@@ -109,11 +109,11 @@ int main() {
 
   std::cout << "flags: " << flags << std::endl;
 
-  std::cout << "threads number per core   : "
-            << cpuid::threads_number_per_core() << std::endl;
+  std::cout << "SMT  : " << cpuid::enabled_logical_processors::smt()
+            << std::endl;
 
-  std::cout << "logical processors number : "
-            << cpuid::logical_processors_number() << std::endl;
+  std::cout << "core : " << cpuid::enabled_logical_processors::core()
+            << std::endl;
 
   return 0;
 }

@@ -49,8 +49,17 @@ auto cpuid::vendor() -> std::string {
 auto cpuid::stepping() -> unsigned {
   unsigned info[]{0x00000001, {}, {}, {}};
   cpuid::get(info);
+
   // The stepping is encoded in bits 3...0.
-  return info[0] & 0x00000008;
+  return info[0] & 0x0000000f;
+}
+
+auto cpuid::deprecated_cpu_count() -> unsigned {
+  unsigned info[]{0x00000001, {}, {}, {}};
+  cpuid::get(info);
+
+  // The logical processor count is encoded in bits 23...16.
+  return (info[1] & 0x00ff0000) >> 16;
 }
 
 auto cpuid::processor_name() -> std::string {
@@ -71,13 +80,13 @@ auto cpuid::processor_name() -> std::string {
   return reinterpret_cast<const char *>(info);
 }
 
-auto cpuid::threads_number_per_core() -> unsigned {
+auto cpuid::enabled_logical_processors::smt() -> unsigned {
   unsigned info[]{0x0000000b, {}, 0x00000000, {}};
   cpuid::get(info); // 00h = SMT level
   return info[1];
 }
 
-auto cpuid::logical_processors_number() -> unsigned {
+auto cpuid::enabled_logical_processors::core() -> unsigned {
   unsigned info[]{0x0000000b, {}, 0x00000001, {}};
   cpuid::get(info); // 01h = core level
   return info[1];
