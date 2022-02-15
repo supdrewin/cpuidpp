@@ -32,6 +32,9 @@ auto largest_extended_function() -> unsigned;
 // don't return a vendor ID string.
 auto vendor() -> std::string;
 
+// The stepping values are processor-specific.
+auto stepping() -> unsigned;
+
 auto processor_name() -> std::string;
 
 // get topology enumeration information

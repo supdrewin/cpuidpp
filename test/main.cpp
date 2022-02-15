@@ -8,6 +8,8 @@ int main() {
 
   std::cout << "model name: " << cpuid::processor_name() << std::endl;
 
+  std::cout << "stepping: " << cpuid::stepping() << std::endl;
+
   std::cout << std::hex
             << "max standard func: " << cpuid::largest_standard_function()
             << "\nmax extended func: " << cpuid::largest_extended_function()

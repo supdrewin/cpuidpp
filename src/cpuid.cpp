@@ -46,6 +46,13 @@ auto cpuid::vendor() -> std::string {
   return reinterpret_cast<const char *>(info);
 }
 
+auto cpuid::stepping() -> unsigned {
+  unsigned info[]{0x00000001, {}, {}, {}};
+  cpuid::get(info);
+  // The stepping is encoded in bits 3...0.
+  return info[0] & 0x00000008;
+}
+
 auto cpuid::processor_name() -> std::string {
   // The three extended functions from Fn8000_0002 to Fn8000_0004 are
   // initialized to and return a null terminated ASCII string up to 48
