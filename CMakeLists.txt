@@ -41,7 +41,6 @@ add_compile_options (
 add_library ( cpuid++ SHARED
   src/cpuid.cpp
   src/feature.cpp
-  src/frequency.cpp
 )
 
 install ( TARGETS cpuid++ LIBRARY )
@@ -49,7 +48,8 @@ install ( TARGETS cpuid++ LIBRARY )
 target_include_directories ( cpuid++ PUBLIC include )
 
 install (
-  DIRECTORY   include/
+  FILES       include/cpuid.hpp
+              include/feature.hpp
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME}
 )
 

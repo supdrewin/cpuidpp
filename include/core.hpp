@@ -18,13 +18,8 @@
 
 namespace cpuid {
 
-// core base frequency in MHz
-auto base_frequency() -> unsigned;
-
-// core maximum frequency in MHz
-auto max_frequency() -> unsigned;
-
-// bus (reference) frequency in MHz
-auto bus_frequency() -> unsigned;
+inline auto get(unsigned *info) -> void {
+  asm("cpuid" : "+a"(info[0]), "+b"(info[1]), "+c"(info[2]), "+d"(info[3]));
+}
 
 } // namespace cpuid

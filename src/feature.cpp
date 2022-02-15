@@ -14,20 +14,17 @@
 /// You should have received a copy of the GNU General Public License along with
 /// this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <cpuid.h>
-
 #include "feature.hpp"
+#include "core.hpp"
 
 auto cpuid::check_feature(cpuid::feature::LEAF_1_ECX feature) -> bool {
-  unsigned ecx, _;
-  if (__get_cpuid(1, &_, &_, &ecx, &_))
-    return ecx & feature;
-  return false;
+  unsigned info[]{0x00000001, {}, {}, {}};
+  cpuid::get(info);
+  return info[2] & feature;
 }
 
 auto cpuid::check_feature(cpuid::feature::LEAF_1_EDX feature) -> bool {
-  unsigned edx, _;
-  if (__get_cpuid(1, &_, &_, &_, &edx))
-    return edx & feature;
-  return false;
+  unsigned info[]{0x00000001, {}, {}, {}};
+  cpuid::get(info);
+  return info[3] & feature;
 }

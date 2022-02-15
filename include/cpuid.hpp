@@ -40,10 +40,18 @@ auto threads_number_per_core() -> unsigned;
 
 auto logical_processors_number() -> unsigned;
 
+// get processor frequency information
+
+// core base frequency in MHz
+auto base_frequency() -> unsigned;
+
+// core maximum frequency in MHz
+auto max_frequency() -> unsigned;
+
+// bus (reference) frequency in MHz
+auto bus_frequency() -> unsigned;
+
 } // namespace cpuid
 
 // get processor feature flags
 #include "feature.hpp"
-
-// get processor frequency information
-#include "frequency.hpp"
