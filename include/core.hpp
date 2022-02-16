@@ -18,8 +18,12 @@
 
 namespace cpuid {
 
+// Warning: at least pointer `info + 3` still vailed
 inline auto get(unsigned *info) -> void {
-  asm("cpuid" : "+a"(info[0]), "+b"(info[1]), "+c"(info[2]), "+d"(info[3]));
+  asm volatile("cpuid"
+               : "+a"(info[0]), "+b"(info[1]), // We will directly modify
+                 "+c"(info[2]), "+d"(info[3])  // elements info[0..=3]
+  );
 }
 
 } // namespace cpuid

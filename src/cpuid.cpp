@@ -37,11 +37,11 @@ auto cpuid::vendor() -> std::string {
 
   cpuid::get(info);
 
-  // We need 'ebx - edx - ecx - eax(\0)',
-  // so do eax <=> edx, edx <=> ebx.
-  asm("\txchg %0, %2\n"
-      "\txchg %0, %1\n"
-      : "+a"(info[0]), "+b"(info[1]), "+c"(info[3]));
+  // What we need is: ebx - edx - ecx - '\0'.
+  asm volatile("\txchg %0, %2\n" // swap(%0(eax), %2(edx));
+               "\txchg %0, %1\n" // swap(%0(edx), %1(ebx));
+               : "+a"(info[0]), "+b"(info[1]), "+c"(info[3]));
+  info[3] <<= 8; // terminate with a byte '\0'
 
   return reinterpret_cast<const char *>(info);
 }
